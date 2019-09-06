@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ứng dụng sản phẩm</title>
+    <style>
+        .container{}
+        .tab{
+            float: left;
+
+        }
+        .tab-2{
+            width: 250px;
+            margin-left: 50px;
+            /*border: 2px solid chartreuse;*/
+            background:chocolate;
+        }
+        .tab-2 input{
+            display: block;
+            margin-bottom: 10px;
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tab tab-1">
+        <table id="table" border="1">
+            <tr>
+                <th>ID product</th>
+                <th> Name product</th>
+                <th>Amount product</th>
+            </tr>
+
+        </table>
+
+    </div>
+    <div class="tab tab-2">
+        <label> ID product :</label> <input type="text" id ="id"/>
+        <label> Name product :</label> <input type="text" id ="name_product"/>
+        <label> Amount product :</label> <input type="text" id ="Amount_product"/>
+        <button onclick="addHtmlTable();">ADD</button>
+        <button onclick="new_product();">New</button>
+        <button onclick="edit_product()">Edit</button>
+        <button onclick="delete_product();">Delete</button>
+    </div>
+</div>
+<script>
+    //bien toàn cuc
+    let rIndex,table = document.getElementById("table");
+    function new_product() {
+        document.getElementById("id").value = "";
+        document.getElementById("name_product").value = "";
+        document.getElementById("Amount_product").value = "";
+
+    }
+    function test_empty(a,b,c) {
+        if(a ==''){
+            alert('Bạn chưa nhập mã  sản  phẩm');
+        }else if(b ==''){
+            alert("Bạn chưa nhập tên sản phẩm");
+        }else if(c==''){
+            alert("Bạn chưa nhập số lượng");
+        }else{
+            return true;
+        }
+        return false ;
+    }
+    function addHtmlTable(){
+
+        //tao table chứa dữ liệu
+       let newRow =table.insertRow(table.length);
+        // tao biến chứa cột
+        cell1 =newRow.insertCell(0);
+        cell2 =newRow.insertCell(1);
+        cell3 =newRow.insertCell(2);
+
+        //lấy giá trị từ input
+        id= document.getElementById("id").value;
+        name_product= document.getElementById("name_product").value;
+        Amount_product= document.getElementById("Amount_product").value;
+        //kiểm tra rỗng
+        let check =test_empty(id,name_product,Amount_product);
+        if(check == false){
+            return;
+        }
+
+        //truyền vào các cột
+        cell1.innerHTML = id;
+        cell2.innerHTML = name_product;
+        cell3.innerHTML = Amount_product;
+            //goi  ham clcik table vao
+        selectedRowToInput();
+
+    }
+    //show Data to table from input
+    function selectedRowToInput(){
+        for(let i = 1; i <table.rows.length;i++){
+            table.rows[i].onclick = function () {
+                //index lấy  giá trị vị trí  tại dong được click
+               rIndex =this.rowIndex;
+               //console.log(rIndex);
+                    //khi click  truyen gia tri vaof  cho  input
+                document.getElementById("id").value = this.cells[0].innerHTML;
+                document.getElementById("name_product").value = this.cells[1].innerHTML;
+                document.getElementById("Amount_product").value = this.cells[2].innerHTML;
+
+            }
+
+        }
+    }
+   // selectedRowToInput();
+    function edit_product(){
+       let id = document.getElementById("id").value;
+        let name_product = document.getElementById("name_product").value;
+        let Amount_product = document.getElementById("Amount_product").value;
+        table.rows[rIndex].cells[0].innerHTML =id;
+        table.rows[rIndex].cells[1].innerHTML =name_product;
+        table.rows[rIndex].cells[2].innerHTML =Amount_product;
+
+
+
+
+    }
+    function delete_product(){
+        table.deleteRow(rIndex);
+
+
+    }
+
+</script>
+</body>
+</html>
